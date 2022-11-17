@@ -8,6 +8,7 @@ const montserrat = Montserrat({ weight: ["500"], subsets: ["latin"] });
 const THEME: MantineThemeOverride = {
   colorScheme: "dark",
   fontFamily: lato.style.fontFamily,
+  primaryColor: "green",
   headings: {
     fontFamily: montserrat.style.fontFamily,
     fontWeight: 500,
