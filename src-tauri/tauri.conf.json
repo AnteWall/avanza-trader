@@ -57,9 +57,11 @@
       {
         "fullscreen": false,
         "height": 720,
+        "minHeight": 720,
         "resizable": true,
         "title": "Avanza Trader",
-        "width": 1280
+        "width": 1280,
+        "minWidth": 1280
       }
     ]
   }

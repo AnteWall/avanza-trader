@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import React from "react";
 import { BarChart } from "react-feather";
+import SessionMenu from "../SessionMenu";
 import Breadcrumb from "./Breadcrumb";
 
 interface NavigationProps {
@@ -51,6 +52,9 @@ const Navigation: React.FC<NavigationProps> = ({
                 </Box>
               </Box>
             </Flex>
+            <Box>
+              <SessionMenu />
+            </Box>
           </Flex>
         </Header>
       }
