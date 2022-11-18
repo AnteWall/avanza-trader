@@ -5,19 +5,20 @@ import {
   Button,
   Box,
   Flex,
-  RingProgress,
   Progress,
   useMantineTheme,
   Loader,
-  Center,
-  ThemeIcon,
   Stack,
   TextInput,
   Group,
   Grid,
+  Collapse,
 } from "@mantine/core";
 import { useState } from "react";
-import { Check, CheckCircle } from "react-feather";
+import OrderCompleteInfo from "./OrderCompleteInfo";
+import OrderActiveInfo from "./OrderActiveInfo";
+import OrderProgress from "./OrderProgress";
+import { useStyles } from "./OrderDrawer.styles";
 
 interface OrderDrawerProps {}
 
@@ -31,8 +32,14 @@ enum OrderState {
 const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
   const [orderState, setOrderState] = useState<OrderState>(OrderState.Creating);
   const [filledQuantity, setFilledQuantity] = useState(0);
-  const [quantity, setQuantity] = useState(42);
+  const [quantity] = useState(42);
   const theme = useMantineTheme();
+  const { classes } = useStyles();
+  const isComplete = orderState === OrderState.Completed;
+  const isPending = orderState === OrderState.Pending;
+  const isActive = orderState === OrderState.Active;
+  const isCreating = orderState === OrderState.Creating;
+
   return (
     <Drawer
       size="lg"
@@ -40,7 +47,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
       opened={true}
       onClose={function (): void {}}
     >
-      <Flex sx={{ height: "calc(100% - 44px)" }} direction="column">
+      <Flex className={classes.root} direction="column">
         <Box p="md" sx={{ flex: 2 }}>
           <Title order={3}>Apple Inc.</Title>
           <Text fz="sm">AAPL</Text>
@@ -76,7 +83,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
                   <Text fz="xs">1245</Text>
                 </Group>
                 <Progress
-                  sx={{ transform: "rotate(180deg)" }}
+                  className={classes.rotate180}
                   color="red"
                   value={73}
                 />
@@ -85,7 +92,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
                   <Text fz="xs">124</Text>
                 </Group>
                 <Progress
-                  sx={{ transform: "rotate(180deg)" }}
+                  className={classes.rotate180}
                   color="red"
                   value={23}
                 />
@@ -127,17 +134,9 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
             Place order
           </Button>
           <Box
+            className={classes.progressOverlay}
             sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
-              transform: `translate(0%, ${
-                orderState === OrderState.Creating ? "100%" : "0px"
-              })`,
-              background: theme.colors.green[7],
+              transform: `translate(0%, ${isCreating ? "100%" : "0px"})`,
             }}
           >
             <Flex
@@ -146,50 +145,27 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
               align="center"
               onClick={() => {
                 setOrderState(OrderState.Creating);
+                setFilledQuantity(0);
               }}
             >
-              {orderState === OrderState.Pending && (
-                <Loader size={94} color="white" />
-              )}
-              {(orderState === OrderState.Active ||
-                orderState === OrderState.Completed) && (
-                <Stack align="center" color="white">
-                  <Text mt={-40} color="#FFF">
-                    {filledQuantity} of {quantity} filled
-                  </Text>
-                  <RingProgress
-                    sections={[
-                      {
-                        value:
-                          filledQuantity === 0
-                            ? 0
-                            : (filledQuantity / quantity) * 100,
-                        color: "white",
-                      },
-                    ]}
-                    thickness={11}
-                    size={116}
-                    label={
-                      <Center>
-                        {orderState === OrderState.Completed ? (
-                          <ThemeIcon
-                            color="white"
-                            variant="filled"
-                            radius={90}
-                            size={40}
-                          >
-                            <Check size={22} color="green" />
-                          </ThemeIcon>
-                        ) : (
-                          <Text color="#FFF">
-                            {((filledQuantity / quantity) * 100).toFixed(0)}%
-                          </Text>
-                        )}
-                      </Center>
-                    }
+              <Stack align="center" color="white">
+                <Collapse in={isPending}>
+                  <Loader size={94} color="white" />
+                </Collapse>
+                <Collapse in={isActive || isComplete}>
+                  <OrderProgress
+                    filledQuantity={filledQuantity}
+                    quantity={quantity}
+                    isComplete={isComplete}
                   />
-                </Stack>
-              )}
+                </Collapse>
+                <Collapse sx={{ textAlign: "center" }} in={isActive}>
+                  <OrderActiveInfo />
+                </Collapse>
+                <Collapse sx={{ textAlign: "center" }} in={isComplete}>
+                  <OrderCompleteInfo quantity={quantity} />
+                </Collapse>
+              </Stack>
             </Flex>
           </Box>
         </Box>
