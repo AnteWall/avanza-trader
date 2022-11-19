@@ -19,6 +19,7 @@ import OrderCompleteInfo from "./OrderCompleteInfo";
 import OrderActiveInfo from "./OrderActiveInfo";
 import OrderProgress from "./OrderProgress";
 import { useStyles } from "./OrderDrawer.styles";
+import CurrencyInput from "../CurrencyInput";
 
 interface OrderDrawerProps {}
 
@@ -101,9 +102,11 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
           </Grid>
         </Box>
         <Box p="md">
-          <TextInput label="Belopp" />
-          <TextInput label="Antal" />
-          <TextInput label="Kurs" />
+          <CurrencyInput label="Amount" currency="USD" />
+          <Group mt="sm" grow>
+            <TextInput label="Antal" placeholder="100" />
+            <CurrencyInput label="Kurs" placeholder="123.32 " currency="USD" />
+          </Group>
         </Box>
         <Box sx={{ maxHeight: 60, flex: "auto" }}>
           <Button
