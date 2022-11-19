@@ -2,7 +2,7 @@ import { createStyles } from "@mantine/core";
 
 export const useStyles = createStyles((theme) => ({
   root: {
-    height: "calc(100% - 44px)",
+    height: "calc(100% - 58px)",
   },
   progressOverlay: {
     position: "absolute",

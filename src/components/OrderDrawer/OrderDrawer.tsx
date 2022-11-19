@@ -13,6 +13,7 @@ import {
   Group,
   Grid,
   Collapse,
+  DrawerProps,
 } from "@mantine/core";
 import { useState } from "react";
 import OrderCompleteInfo from "./OrderCompleteInfo";
@@ -21,7 +22,9 @@ import OrderProgress from "./OrderProgress";
 import { useStyles } from "./OrderDrawer.styles";
 import CurrencyInput from "../CurrencyInput";
 
-interface OrderDrawerProps {}
+interface OrderDrawerProps extends DrawerProps {
+  securityId: string;
+}
 
 enum OrderState {
   Creating = "Creating",
@@ -30,11 +33,13 @@ enum OrderState {
   Completed = "Completed",
 }
 
-const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
+const OrderDrawer: React.FC<OrderDrawerProps> = ({
+  securityId,
+  ...otherProps
+}) => {
   const [orderState, setOrderState] = useState<OrderState>(OrderState.Creating);
   const [filledQuantity, setFilledQuantity] = useState(0);
   const [quantity] = useState(42);
-  const theme = useMantineTheme();
   const { classes } = useStyles();
   const isComplete = orderState === OrderState.Completed;
   const isPending = orderState === OrderState.Pending;
@@ -43,15 +48,19 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({}) => {
 
   return (
     <Drawer
+      styles={{
+        closeButton: {
+          margin: "14px 14px 0 0",
+        },
+      }}
       size="lg"
       position="right"
-      opened={true}
-      onClose={function (): void {}}
+      {...otherProps}
     >
       <Flex className={classes.root} direction="column">
-        <Box p="md" sx={{ flex: 2 }}>
+        <Box p="md" sx={{ flex: 2, marginTop: -54 }}>
           <Title order={3}>Apple Inc.</Title>
-          <Text fz="sm">AAPL</Text>
+          <Text fz="sm">{securityId}</Text>
         </Box>
         <Box>
           <Grid>
