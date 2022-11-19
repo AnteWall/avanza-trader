@@ -12,7 +12,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ title, href }) => {
     return <Text>{title}</Text>;
   }
   return (
-    <Link href={href}>
+    <Link legacyBehavior href={href} passHref>
       <Anchor>{title}</Anchor>
     </Link>
   );

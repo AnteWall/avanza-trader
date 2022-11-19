@@ -1,13 +1,13 @@
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import type { AppProps } from "next/app";
-import { Lato, Roboto, Montserrat } from "@next/font/google";
+import { Roboto, Montserrat } from "@next/font/google";
 
-const lato = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
+const roboto = Roboto({ weight: ["400", "500", "700"], subsets: ["latin"] });
 const montserrat = Montserrat({ weight: ["500"], subsets: ["latin"] });
 
 const THEME: MantineThemeOverride = {
   colorScheme: "dark",
-  fontFamily: lato.style.fontFamily,
+  fontFamily: roboto.style.fontFamily,
   primaryColor: "green",
   headings: {
     fontFamily: montserrat.style.fontFamily,
