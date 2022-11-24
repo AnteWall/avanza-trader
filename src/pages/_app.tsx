@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import { SpotlightProvider } from "@mantine/spotlight";
 import { Home, LogOut } from "react-feather";
 import SpotlightActionsWrapper from "../components/SpotlightActionsWrapper";
+import { useRouter } from "next/router";
+import { homePath } from "../utils/routes";
 const AvanzaContextProvider = dynamic(
   () => import("../context/AvanzaContext").then((m) => m.AvanzaContextProvider),
   { ssr: false }
@@ -33,6 +35,7 @@ const THEME: MantineThemeOverride = {
 };
 
 function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={THEME}>
       <AvanzaContextProvider>
@@ -45,7 +48,7 @@ function App({ Component, pageProps }: AppProps) {
               group: "Navigation",
               description: "Go to dashboard page",
               onTrigger: () => {
-                console.log("dashboard");
+                router.push(homePath());
               },
               icon: <Home />,
             },

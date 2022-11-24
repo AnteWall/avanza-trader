@@ -1,6 +1,9 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { AvanzaClient } from "avanza-ts";
 import { HttpVerb } from "@tauri-apps/api/http";
+import { useLocalStorage } from "@mantine/hooks";
+import { Session } from "avanza-ts/dist/client/AuthClient";
+
 interface AvanaContextData {
   client: AvanzaClient;
 }
@@ -32,8 +35,20 @@ export async function fetch(
 export const AvanzaContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  console.log(fetch);
-  const [client] = useState(new AvanzaClient({ fetch: fetch }));
+  const [session, setSession] = useLocalStorage<Session | undefined>({
+    key: "avanza-session",
+    defaultValue: undefined,
+    getInitialValueInEffect: false,
+  });
+  const [client] = useState(
+    new AvanzaClient({ fetch: fetch, onSessionChange: setSession })
+  );
+
+  useEffect(() => {
+    if (session) {
+      client.setSession(session);
+    }
+  }, []);
 
   return (
     <AvanzaContext.Provider

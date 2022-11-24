@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useAvanza } from "../../hooks/useAvanza";
 import { loginPath } from "../../utils/routes";
 
 interface AuthWrapperProps {
@@ -7,7 +8,11 @@ interface AuthWrapperProps {
 }
 
 const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
-  const isConnected = true;
+  const { client } = useAvanza();
+  // @ts-ignore
+  console.log(client.session);
+  // @ts-ignore
+  const isConnected = client.session !== undefined;
   const router = useRouter();
   useEffect(() => {
     if (!isConnected) {
