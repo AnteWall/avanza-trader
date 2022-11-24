@@ -12,7 +12,13 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": true,
+      "http": {
+        "scope": [
+          "https://avanza.se/*",
+          "https://www.avanza.se/*"
+        ]
+      }
     },
     "bundle": {
       "active": true,

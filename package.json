@@ -13,22 +13,27 @@
   "dependencies": {
     "@emotion/react": "11.10.5",
     "@emotion/server": "11.10.0",
-    "@mantine/core": "5.8.0",
+    "@mantine/core": "5.8.2",
     "@mantine/dates": "5.8.0",
     "@mantine/form": "5.8.0",
-    "@mantine/hooks": "5.8.0",
+    "@mantine/hooks": "5.8.2",
     "@mantine/modals": "5.8.0",
     "@mantine/next": "5.8.0",
     "@mantine/notifications": "5.8.0",
     "@mantine/spotlight": "5.8.0",
     "@next/font": "13.0.3",
+    "@tauri-apps/api": "1.2.0",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
+    "avanza-ts": "0.3.0",
     "dayjs": "1.11.6",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",
+    "mantine-datatable": "1.7.17",
     "next": "13.0.3",
+    "node-fetch": "2.6.7",
+    "qrcode": "1.5.1",
     "react": "18.2.0",
     "react-confetti": "6.1.0",
     "react-dom": "18.2.0",
@@ -36,6 +41,7 @@
     "typescript": "4.9.3"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.2.0"
+    "@tauri-apps/cli": "1.2.0",
+    "@types/qrcode": "1.5.0"
   }
 }
