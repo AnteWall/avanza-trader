@@ -7,9 +7,11 @@ import {
   Title,
   Breadcrumbs,
   Anchor,
+  ActionIcon,
 } from "@mantine/core";
+import { useSpotlight } from "@mantine/spotlight";
 import React from "react";
-import { BarChart } from "react-feather";
+import { BarChart, Search } from "react-feather";
 import SessionMenu from "../SessionMenu";
 import Breadcrumb from "./Breadcrumb";
 
@@ -24,6 +26,7 @@ const Navigation: React.FC<NavigationProps> = ({
   breadcrumbs = [],
   children,
 }) => {
+  const { openSpotlight } = useSpotlight();
   const theme = useMantineTheme();
   return (
     <AppShell
@@ -52,9 +55,18 @@ const Navigation: React.FC<NavigationProps> = ({
                 </Box>
               </Box>
             </Flex>
-            <Box>
+            <Flex justify="center" align="center">
+              <ActionIcon
+                onClick={openSpotlight}
+                mx="md"
+                size="lg"
+                title="Search"
+              >
+                <Search />
+              </ActionIcon>
+
               <SessionMenu />
-            </Box>
+            </Flex>
           </Flex>
         </Header>
       }

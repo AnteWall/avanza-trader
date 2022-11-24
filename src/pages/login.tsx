@@ -36,7 +36,6 @@ const LoginPage = () => {
   const login = async () => {
     setLoading(true);
     setError(undefined);
-    console.log("HERE");
     try {
       const res = await client.authenticateWithBankID(ssn, async (qrCode) => {
         const dataUrl = await toDataURL(qrCode);
