@@ -3,11 +3,7 @@ import type { AppProps } from "next/app";
 import { Roboto, Montserrat } from "@next/font/google";
 import { OrdersProvider } from "../context/OrdersContext";
 import dynamic from "next/dynamic";
-import { SpotlightProvider } from "@mantine/spotlight";
-import { Home, LogOut } from "react-feather";
-import SpotlightActionsWrapper from "../components/SpotlightActionsWrapper";
-import { useRouter } from "next/router";
-import { homePath } from "../utils/routes";
+import Spotlight from "../components/Spotlight";
 const AvanzaContextProvider = dynamic(
   () => import("../context/AvanzaContext").then((m) => m.AvanzaContextProvider),
   { ssr: false }
@@ -35,39 +31,14 @@ const THEME: MantineThemeOverride = {
 };
 
 function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={THEME}>
       <AvanzaContextProvider>
-        <SpotlightProvider
-          highlightColor="teal"
-          highlightQuery
-          actions={[
-            {
-              title: "Dashboard",
-              group: "Navigation",
-              description: "Go to dashboard page",
-              onTrigger: () => {
-                router.push(homePath());
-              },
-              icon: <Home />,
-            },
-            {
-              title: "Sign out",
-              group: "Navigation",
-              description: "Sign out of your account",
-              onTrigger: () => {
-                console.log("Sign out");
-              },
-              icon: <LogOut />,
-            },
-          ]}
-          actionsWrapperComponent={SpotlightActionsWrapper}
-        >
+        <Spotlight>
           <OrdersProvider>
             <Component {...pageProps} />
           </OrdersProvider>
-        </SpotlightProvider>
+        </Spotlight>
       </AvanzaContextProvider>
     </MantineProvider>
   );
