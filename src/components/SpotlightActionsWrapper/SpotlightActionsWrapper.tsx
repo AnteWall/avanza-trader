@@ -1,4 +1,4 @@
-import { Group, Text, Anchor, Kbd } from "@mantine/core";
+import { Group, Text, Kbd } from "@mantine/core";
 import React from "react";
 import { getOS, Platform } from "../../utils/platform";
 

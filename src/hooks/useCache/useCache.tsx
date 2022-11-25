@@ -58,8 +58,8 @@ export function useCache<T>(
 
   const { data, isLoading, reload, error } = useAsync(retrieveData, {
     onReject: opts.onError,
+    watch: key,
   });
-
   return {
     isFetching: isLoading,
     data,
