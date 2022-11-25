@@ -4,6 +4,7 @@ import { Roboto, Montserrat } from "@next/font/google";
 import { OrdersProvider } from "../context/OrdersContext";
 import dynamic from "next/dynamic";
 import Spotlight from "../components/Spotlight";
+import { NotificationsProvider } from "@mantine/notifications";
 const AvanzaContextProvider = dynamic(
   () => import("../context/AvanzaContext").then((m) => m.AvanzaContextProvider),
   { ssr: false }
@@ -33,13 +34,15 @@ const THEME: MantineThemeOverride = {
 function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={THEME}>
-      <AvanzaContextProvider>
-        <Spotlight>
-          <OrdersProvider>
-            <Component {...pageProps} />
-          </OrdersProvider>
-        </Spotlight>
-      </AvanzaContextProvider>
+      <NotificationsProvider>
+        <AvanzaContextProvider>
+          <Spotlight>
+            <OrdersProvider>
+              <Component {...pageProps} />
+            </OrdersProvider>
+          </Spotlight>
+        </AvanzaContextProvider>
+      </NotificationsProvider>
     </MantineProvider>
   );
 }
