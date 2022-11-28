@@ -785,10 +785,10 @@ ast-types-flow@^0.0.7:
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
   integrity sha512-eBvWn1lvIApYMhzQMsu9ciLfkBY499mFZlNqG+/9WR7PVlroQw0vG30cOQQbaKz3sCEc44TAOu2ykzqXSNnwag==
 
-avanza-ts@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/avanza-ts/-/avanza-ts-0.5.0.tgz#72b1f4126cb2adb227a5b19e3b226d5c5088d73c"
-  integrity sha512-s8mxW7iSwfiGOfM3ffzhZqxxw0KmfbfxG8ECyXw+WmQ1/xNGtT5eRuW6R43FoyixVUsQAf2dz7t8yTh9tQDwEw==
+avanza-ts@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/avanza-ts/-/avanza-ts-0.6.0.tgz#8bf99a3afbc0bfb45dbf98778b5c3f55c15cd0ba"
+  integrity sha512-4JiFPTARvHCBPh3X6Gs8QDE0wrX+JMSOeuw9E6bnzSMzuAnVYsIhkoFfjPf2X4o8BrpSqxejhaMP94TogEESNg==
 
 axe-core@^4.4.3:
   version "4.5.2"

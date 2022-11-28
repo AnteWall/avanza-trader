@@ -1,0 +1,1 @@
+export { useInstrumentDetails } from "./useInstrumentDetails";
