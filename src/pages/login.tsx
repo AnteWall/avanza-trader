@@ -44,7 +44,9 @@ const LoginPage = () => {
         setLoading(false);
       });
       setCurrentState(LoginState.SSN);
-      router.replace(homePath());
+      setTimeout(() => {
+        // router.replace(homePath());
+      }, 2000);
     } catch (error: any) {
       setError(error);
     } finally {

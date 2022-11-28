@@ -1,4 +1,3 @@
-import { Progress, RingProgress } from "@mantine/core";
 import { useDebouncedState } from "@mantine/hooks";
 import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
 import { useRouter } from "next/router";
@@ -6,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Home, LogOut } from "react-feather";
 import { useAvanza } from "../../hooks/useAvanza";
 import { useGlobalSearch } from "../../hooks/useGlobalSearch";
-import { homePath, loginPath } from "../../utils/routes";
+import { homePath, loginPath, orderBookPath } from "../../utils/routes";
 import SpotlightActionsWrapper from "../SpotlightActionsWrapper";
 
 interface SpotlightProps {
@@ -31,6 +30,9 @@ const Spotlight: React.FC<SpotlightProps> = ({ children }) => {
             // icon: item.lastPrice,
             onTrigger: () => {
               console.log(group.instrumentType, item.link.orderbookId);
+              router.push(
+                orderBookPath(group.instrumentType, item.link.orderbookId)
+              );
             },
           };
         });

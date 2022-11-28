@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from "react";
-import { useAsync } from "react-async";
+import { useAsync } from "react-async-hook";
 const CACHES: {
   [key: string]: Promise<any>;
 } = {};
@@ -56,16 +56,15 @@ export function useCache<T>(
     return cachedPromise;
   }, [key, count]);
 
-  const { data, isLoading, reload, error } = useAsync(retrieveData, {
-    onReject: opts.onError,
-    watch: key,
+  const { result, loading, error, execute } = useAsync(retrieveData, [key], {
+    onError: opts.onError,
   });
   return {
-    isFetching: isLoading,
-    data,
+    isFetching: loading,
+    data: result,
     error,
     updateCache,
     removeCache,
-    refetch: reload,
+    refetch: execute,
   };
 }

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { AvanzaClient } from "avanza-ts";
 import { HttpVerb } from "@tauri-apps/api/http";
 import { useLocalStorage } from "@mantine/hooks";
@@ -6,10 +6,12 @@ import { Session } from "avanza-ts/dist/client/AuthClient";
 
 interface AvanaContextData {
   client: AvanzaClient;
+  isConnected: boolean;
 }
 
 export const AvanzaContext = createContext<AvanaContextData>({
   client: undefined as unknown as AvanzaClient,
+  isConnected: false,
 });
 
 export async function fetch(
@@ -17,7 +19,6 @@ export async function fetch(
   init?: RequestInit
 ): Promise<Response> {
   const { fetch } = await import("@tauri-apps/api/http");
-  console.log("fetch", input, init);
   const res = await fetch(input.toString(), {
     ...init,
     method: init?.method as HttpVerb,
@@ -35,25 +36,33 @@ export async function fetch(
 export const AvanzaContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [isConnected, setIsConnected] = useState(false);
   const [session, setSession] = useLocalStorage<Session | undefined>({
     key: "avanza-session",
-    defaultValue: undefined,
     getInitialValueInEffect: false,
   });
-  const [client] = useState(
-    new AvanzaClient({ fetch: fetch, onSessionChange: setSession })
+  const client = useRef<AvanzaClient>(
+    new AvanzaClient({
+      fetch: fetch,
+      onSessionChange: (session) => {
+        setSession(session);
+      },
+    })
   );
 
   useEffect(() => {
     if (session) {
-      client.setSession(session);
+      client.current.setSession(session);
+      setIsConnected(true);
+    } else {
+      setIsConnected(false);
     }
   }, []);
-
   return (
     <AvanzaContext.Provider
       value={{
-        client,
+        client: client.current,
+        isConnected,
       }}
     >
       {children}

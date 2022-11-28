@@ -6,8 +6,7 @@ import {
 import { useAccounts } from "../../hooks/useAccounts";
 
 function DataTable<T extends any>({ ...otherProps }: MDataTableProps<T>) {
-  const { data } = useAccounts();
-  console.log(data);
+  const { data, error, isFetching } = useAccounts();
   return (
     <MDataTable<T>
       withBorder

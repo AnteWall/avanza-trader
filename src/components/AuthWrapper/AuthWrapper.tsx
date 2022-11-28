@@ -8,8 +8,7 @@ interface AuthWrapperProps {
 }
 
 const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
-  const { client } = useAvanza();
-  const isConnected = client.isConnected();
+  const { client, isConnected } = useAvanza();
   const router = useRouter();
   useEffect(() => {
     if (!isConnected) {
