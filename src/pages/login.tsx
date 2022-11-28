@@ -9,10 +9,11 @@ import {
   Container,
   Flex,
   Collapse,
+  Checkbox,
 } from "@mantine/core";
-import { useInputState } from "@mantine/hooks";
+import { useInputState, useLocalStorage } from "@mantine/hooks";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BankID from "../../public/bankid-vector-logo.svg";
 import { useAvanza } from "../hooks/useAvanza";
 import { toDataURL } from "qrcode";
@@ -26,12 +27,25 @@ enum LoginState {
 
 const LoginPage = () => {
   const router = useRouter();
+  const [rememberSSNValue, setRememberSSNValue] = useLocalStorage({
+    key: "avanza-ssn",
+    getInitialValueInEffect: false,
+  });
   const [currentState, setCurrentState] = useState(LoginState.SSN);
-  const [ssn, setSSN] = useInputState("");
+  const [ssn, setSSN] = useInputState(rememberSSNValue);
+  const [rememberSSN, setRememberSSN] = useInputState(!!rememberSSNValue);
   const [qrString, setQrString] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const { client } = useAvanza();
+
+  useEffect(() => {
+    if (rememberSSN && ssn) {
+      setRememberSSNValue(ssn);
+    } else if (!rememberSSN) {
+      setRememberSSNValue("");
+    }
+  }, [rememberSSN, ssn]);
 
   const login = async () => {
     setLoading(true);
@@ -45,7 +59,7 @@ const LoginPage = () => {
       });
       setCurrentState(LoginState.SSN);
       setTimeout(() => {
-        // router.replace(homePath());
+        router.replace(homePath());
       }, 2000);
     } catch (error: any) {
       setError(error);
@@ -75,6 +89,11 @@ const LoginPage = () => {
               />
             </Stack>
             <Group position="apart" mt="xl">
+              <Checkbox
+                label="Remember social security number"
+                checked={rememberSSN}
+                onChange={setRememberSSN}
+              />
               <Button
                 fullWidth
                 size="lg"
