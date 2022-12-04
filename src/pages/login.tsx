@@ -37,7 +37,13 @@ const LoginPage = () => {
   const [qrString, setQrString] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
-  const { client } = useAvanza();
+  const { client, isConnected } = useAvanza();
+
+  useEffect(() => {
+    if (isConnected) {
+      router.replace(homePath());
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     if (rememberSSN && ssn) {

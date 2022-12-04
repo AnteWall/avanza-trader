@@ -29,7 +29,9 @@ export async function fetch(
         }
       : undefined,
   });
-
+  if (!!process.env.DEBUG) {
+    console.log(res);
+  }
   return new Response(JSON.stringify(res.data) as BodyInit, res);
 }
 
@@ -57,7 +59,7 @@ export const AvanzaContextProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       setIsConnected(false);
     }
-  }, []);
+  }, [session]);
   return (
     <AvanzaContext.Provider
       value={{
