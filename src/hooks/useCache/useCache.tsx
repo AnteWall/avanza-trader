@@ -16,7 +16,14 @@ export type UseCacheResponse<T> = {
 };
 
 export type UseCachecOptions = {
-  onError?: (error: Error) => void;
+  onError?:
+    | ((
+        e: Error,
+        options: {
+          isCurrent: () => boolean;
+        }
+      ) => void)
+    | undefined;
 };
 
 export function useCache<T>(

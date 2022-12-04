@@ -1,10 +1,11 @@
-import { Grid } from "@mantine/core";
+import { Box, Grid } from "@mantine/core";
 import { InstrumentType } from "avanza-ts";
 import { useRouter } from "next/router";
 import React from "react";
 import InstrumentInfo from "../../../components/InstrumentInfo";
 import Navigation from "../../../components/Navigation";
 import OrderDepth from "../../../components/OrderDepth";
+import SecurityChart from "../../../components/SecurityChart";
 import { useInstrument } from "../../../hooks/useInstrument";
 import { useInstrumentDetails } from "../../../hooks/useInstrumentDetails";
 
@@ -40,6 +41,12 @@ const OrderBookPage = () => {
       instrument: {query.instrument}
       <Grid>
         <Grid.Col span={8}>
+          <Box sx={{ height: 400, width: "100%" }}>
+            <SecurityChart
+              instrumentType={query.instrument as InstrumentType}
+              instrumentId={query.orderbookId as string}
+            />
+          </Box>
           <InstrumentInfo
             details={instrumentDetails}
             loading={isFetchingInstrumentDetails}

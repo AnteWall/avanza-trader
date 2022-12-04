@@ -26,7 +26,8 @@
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
-    "avanza-ts": "0.6.0",
+    "avanza-ts": "0.7.0",
+    "date-fns": "2.29.3",
     "dayjs": "1.11.6",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",
@@ -40,6 +41,7 @@
     "react-dom": "18.2.0",
     "react-feather": "2.0.10",
     "react-use": "17.4.0",
+    "recharts": "2.1.16",
     "typescript": "4.9.3"
   },
   "devDependencies": {
