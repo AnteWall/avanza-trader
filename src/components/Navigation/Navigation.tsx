@@ -46,7 +46,7 @@ const Navigation: React.FC<NavigationProps> = ({
                   <Breadcrumbs>
                     {breadcrumbs.map((breadcrumb, index) => (
                       <Breadcrumb
-                        key={breadcrumb.title}
+                        key={`${index}-${breadcrumb.title}`}
                         title={breadcrumb.title}
                         href={breadcrumb.href}
                       />
