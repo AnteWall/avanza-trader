@@ -18,6 +18,7 @@ export async function fetch(
   input: RequestInfo | URL,
   init?: RequestInit
 ): Promise<Response> {
+  // console.log(input);
   const { fetch } = await import("@tauri-apps/api/http");
   const res = await fetch(input.toString(), {
     ...init,
@@ -29,16 +30,13 @@ export async function fetch(
         }
       : undefined,
   });
-  if (!!process.env.DEBUG) {
-    console.log(res);
-  }
+  // console.log(res);
   return new Response(JSON.stringify(res.data) as BodyInit, res);
 }
 
 export const AvanzaContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isConnected, setIsConnected] = useState(false);
   const [session, setSession] = useLocalStorage<Session | undefined>({
     key: "avanza-session",
     getInitialValueInEffect: false,
@@ -52,14 +50,7 @@ export const AvanzaContextProvider: React.FC<{ children: React.ReactNode }> = ({
     })
   );
 
-  useEffect(() => {
-    if (session) {
-      client.current.setSession(session);
-      setIsConnected(true);
-    } else {
-      setIsConnected(false);
-    }
-  }, [session]);
+  const isConnected = !!session && session.securityToken !== undefined;
   return (
     <AvanzaContext.Provider
       value={{
