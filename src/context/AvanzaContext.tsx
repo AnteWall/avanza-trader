@@ -18,7 +18,7 @@ export async function fetch(
   input: RequestInfo | URL,
   init?: RequestInit
 ): Promise<Response> {
-  // console.log(input);
+  console.log(input);
   const { fetch } = await import("@tauri-apps/api/http");
   const res = await fetch(input.toString(), {
     ...init,
@@ -30,7 +30,7 @@ export async function fetch(
         }
       : undefined,
   });
-  // console.log(res);
+  console.log(res);
   return new Response(JSON.stringify(res.data) as BodyInit, res);
 }
 

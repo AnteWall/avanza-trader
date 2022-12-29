@@ -1,6 +1,7 @@
 import { Title, Text, Table, ActionIcon } from "@mantine/core";
 import dynamic from "next/dynamic";
 import { Plus } from "react-feather";
+import AccountsList from "../components/AccountsList";
 import AuthWrapper from "../components/AuthWrapper";
 import DataTable from "../components/DataTable";
 import Navigation from "../components/Navigation";
@@ -36,9 +37,9 @@ function Home() {
     <AuthWrapper>
       <Navigation
         title="Dashboard"
-        breadcrumbs={[{ title: "hello" }, { title: "test", href: "/test" }]}
+        // breadcrumbs={[{ title: "Dashboard" }, { title: "test", href: "/test" }]}
       >
-        Hello
+        <AccountsList />
         <Text>Hello</Text>
         <Title>Hello</Title>
         <DataTable

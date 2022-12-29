@@ -3,6 +3,7 @@ import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Home, LogOut } from "react-feather";
+import { useAccounts } from "../../hooks/useAccounts";
 import { useAvanza } from "../../hooks/useAvanza";
 import { useGlobalSearch } from "../../hooks/useGlobalSearch";
 import { homePath, loginPath, orderBookPath } from "../../utils/routes";
@@ -18,10 +19,11 @@ const Spotlight: React.FC<SpotlightProps> = ({ children }) => {
 
   const [query, setQuery] = useDebouncedState("", 200);
   const { data, error, isFetching } = useGlobalSearch(query);
+  // const { data: accountsData } = useAccounts({ skip: !client.isConnected() });
   const [actions, setActions] = useState<SpotlightAction[]>([]);
   useEffect(() => {
-    if (data) {
-      const actions = data.resultGroups.map((group) => {
+    if (data /* || accountsData*/) {
+      let actions = (data?.resultGroups ?? []).map((group) => {
         return group.hits.map((item) => {
           return {
             group: group.instrumentType,
@@ -37,6 +39,21 @@ const Spotlight: React.FC<SpotlightProps> = ({ children }) => {
           };
         });
       });
+      /*if (accountsData) {
+        actions = [
+          ...actions,
+          accountsData.accounts.map((account) => {
+            return {
+              group: "Accounts",
+              title: account.name,
+              description: account.accountType,
+              onTrigger: () => {
+                console.log(account);
+              },
+            };
+          }),
+        ];
+      }*/
       const flattenActions = actions.reduce(
         (accumulator: SpotlightAction[], value: SpotlightAction[]) =>
           accumulator.concat(value),
@@ -44,7 +61,7 @@ const Spotlight: React.FC<SpotlightProps> = ({ children }) => {
       );
       setActions(flattenActions);
     }
-  }, [data]);
+  }, [data /*, accountsData*/]);
 
   return (
     <SpotlightProvider

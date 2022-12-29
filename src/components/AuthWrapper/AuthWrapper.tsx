@@ -15,6 +15,11 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ children }) => {
       router.replace(loginPath());
     }
   }, [isConnected]);
+
+  if (!isConnected) {
+    return null;
+  }
+
   return <>{children}</>;
 };
 

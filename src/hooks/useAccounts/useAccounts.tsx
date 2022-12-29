@@ -8,7 +8,15 @@ import { showNotification } from "@mantine/notifications";
 import { errorNotification } from "../../utils/notifications";
 import { AccountsOverviewResponse, AvanzaClient } from "avanza-ts";
 
-export function useAccounts() {
+interface UseAccoutsOptions {
+  skip?: boolean;
+}
+
+export function useAccounts(
+  opts: UseAccoutsOptions = {
+    skip: false,
+  }
+) {
   const { client } = useAvanza();
   const { replace } = useRouter();
 
@@ -22,6 +30,7 @@ export function useAccounts() {
     },
     `AVANZA_ACCOUNTS`,
     {
+      skip: opts.skip,
       onError,
     }
   );
@@ -34,7 +43,7 @@ function onAvanzaUnauthorized(
 ) {
   const err = parseErrorMessage(error);
   if (isUnauthorized(err)) {
-    client.disconnect();
+    // client.disconnect();
     replace(loginPath());
     showNotification({
       ...errorNotification(err, {

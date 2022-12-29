@@ -24,12 +24,15 @@ export type UseCachecOptions = {
         }
       ) => void)
     | undefined;
+  skip?: boolean;
 };
 
 export function useCache<T>(
   getData: () => Promise<T>,
   dataKey: DataKey,
-  opts: UseCachecOptions = {}
+  opts: UseCachecOptions = {
+    skip: false,
+  }
 ): UseCacheResponse<T> {
   const [count, setCount] = useState<number>(0);
 
@@ -63,8 +66,10 @@ export function useCache<T>(
     return cachedPromise;
   }, [key, count]);
 
-  const { result, loading, error, execute } = useAsync(retrieveData, [key], {
+  const { result, loading, error, execute } = useAsync<T>(retrieveData, [key], {
     onError: opts.onError,
+    executeOnMount: !opts.skip,
+    executeOnUpdate: !opts.skip,
   });
   return {
     isFetching: loading,
